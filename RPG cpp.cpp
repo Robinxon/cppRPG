@@ -1,5 +1,4 @@
 ﻿#include <iostream>
-#include "Postac.h"
 #include "Gracz.h"
 using namespace std;
 
