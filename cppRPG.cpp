@@ -1,6 +1,23 @@
 ﻿#include <iostream>
+#include <string>
+#include <locale.h>
 #include "Gracz.h"
 using namespace std;
+
+void menuGlowne();
+void nowaGra();
+
+Gracz* gracz = NULL;
+
+int main()
+{
+    setlocale(LC_CTYPE, "Polish");
+
+    menuGlowne();
+
+    delete gracz;
+    return 0;
+}
 
 void menuGlowne()
 {
@@ -17,14 +34,14 @@ void menuGlowne()
         cout << R"(     \/|__|   |__|          \/                  \/ )" << endl;
         cout << endl;
         cout << "1. Nowa gra" << endl;
-        cout << "2. Wczytaj gre" << endl;
-        cout << "9. Wyjdz z gry" << endl;
+        cout << "2. Wczytaj grę" << endl;
+        cout << "9. Wyjdź z gry" << endl;
         cin >> wybor;
 
         switch (wybor)
         {
         case 1:
-            //nowa gra
+            nowaGra();
             break;
         case 2:
             //wczytaj gre
@@ -35,11 +52,16 @@ void menuGlowne()
     } while (wybor != 9);
 }
 
-int main()
+void nowaGra()
 {
-    menuGlowne();
+    string nazwaGracza;
 
-    Gracz gracz = Gracz("Robert");
-    
-    return 0;
+    system("CLS");
+    cout << "Podaj nazwę gracza:" << endl;
+    cin.ignore();
+    getline(cin, nazwaGracza);
+
+    gracz = new Gracz(nazwaGracza);
+
+    menuGlowne();
 }
