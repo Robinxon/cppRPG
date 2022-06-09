@@ -143,7 +143,7 @@
     <ClCompile Include="Postac.cpp" />
     <ClCompile Include="Przeciwnik.cpp" />
     <ClCompile Include="Przedmiot.cpp" />
-    <ClCompile Include="RPG cpp.cpp" />
+    <ClCompile Include="cppRPG.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gracz.h" />
