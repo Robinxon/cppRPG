@@ -10,6 +10,6 @@ private:
 	Przedmiot przedmiotDefensywny;
 
 public:
-	Gracz(string _nazwa);
+	Gracz(string _nazwa, int _poziomTrudnosci);
 };
 

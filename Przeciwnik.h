@@ -4,7 +4,7 @@
 class Przeciwnik : public Postac
 {
 private:
-	int poziomTrudnosci;
+	string typ;
 	int nagroda;
 };
 
