@@ -9,3 +9,8 @@ string Postac::dostanNazwa()
 {
 	return nazwa;
 }
+
+void Postac::ustawPoziomTrudnosci(int _poziomTrudnosci)
+{
+	poziomTrudnosci = _poziomTrudnosci;
+}

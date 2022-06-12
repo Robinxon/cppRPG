@@ -6,6 +6,7 @@ using namespace std;
 
 void menuGlowne();
 void nowaGra();
+void prolog();
 
 Gracz* gracz = NULL;
 
@@ -61,7 +62,27 @@ void nowaGra()
     cin.ignore();
     getline(cin, nazwaGracza);
 
-    gracz = new Gracz(nazwaGracza);
+    int poziomTrudnosci = 0;
+    do
+    {
+        cout << endl;
+        cout << "Wybierz poziom trudnosci:" << endl;
+        cout << "1. Łatwy" << endl;
+        cout << "2. Normalny" << endl;
+        cout << "3. Trudny" << endl;
+        cin >> poziomTrudnosci;
+    } while (poziomTrudnosci != 1 && poziomTrudnosci != 2 && poziomTrudnosci != 3);
 
-    menuGlowne();
+    gracz = new Gracz(nazwaGracza, poziomTrudnosci);
+
+    prolog();
+}
+
+void prolog()
+{
+    system("CLS");
+    cout << "Za górami, za lasami, nasz bohater postanowił wejść do starego zamczyska zwanego SESJA." << endl;
+    cout << "Ciekawe co będzie na niego tam czychać..." << endl;
+    cout << endl;
+    system("pause");
 }
