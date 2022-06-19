@@ -1,16 +1,36 @@
 #include "Postac.h"
 
-void Postac::ustawNazwa(string _nazwa)
-{
-	nazwa = _nazwa;
-}
-
 string Postac::dostanNazwa()
 {
 	return nazwa;
 }
 
-void Postac::ustawPoziomTrudnosci(int _poziomTrudnosci)
+int Postac::dostanMaksZdrowie()
 {
-	poziomTrudnosci = _poziomTrudnosci;
+	return maksZdrowie;
+}
+
+int Postac::dostanAktualneZdrowie()
+{
+	return aktualneZdrowie;
+}
+
+int Postac::dostanPoziom()
+{
+	return poziom;
+}
+
+int Postac::dostanPoziomTrudnosci()
+{
+	return poziomTrudnosci;
+}
+
+int Postac::dostanAtak()
+{
+	return atak;
+}
+
+int Postac::dostanObrone()
+{
+	return obrona;
 }

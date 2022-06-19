@@ -6,10 +6,20 @@ class Gracz : public Postac
 {
 private:
 	int doswiadczenie;
-	Przedmiot przedmiotOfensywny;
-	Przedmiot przedmiotDefensywny;
+	Przedmiot* przedmiotOfensywny;
+	Przedmiot* przedmiotDefensywny;
 
 public:
 	Gracz(string _nazwa, int _poziomTrudnosci);
+
+	int dostanDoswiadczenie();
+
+	Przedmiot* dostanPrzedmiotOfensywny();
+
+	Przedmiot* dostanPrzedmiotDefensywny();
+
+	int dostanAtak();
+
+	int dostanObrone();
 };
 

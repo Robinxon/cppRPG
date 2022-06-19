@@ -4,7 +4,7 @@ using namespace std;
 
 class Postac
 {
-private:
+protected:
 	string nazwa;
 	int maksZdrowie;
 	int aktualneZdrowie;
@@ -14,8 +14,18 @@ private:
 	int obrona;
 
 public:
-	void ustawNazwa(string _nazwa);
 	string dostanNazwa();
-	void ustawPoziomTrudnosci(int _poziomTrudnosci);
+	
+	int dostanMaksZdrowie();
+
+	int dostanAktualneZdrowie();
+
+	int dostanPoziom();
+
+	int dostanPoziomTrudnosci();
+
+	int dostanAtak();
+
+	int dostanObrone();
 };
 

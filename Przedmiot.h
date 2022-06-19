@@ -4,8 +4,12 @@ using namespace std;
 
 class Przedmiot
 {
+private:
 	string nazwa;
-	int atak;
-	int obrona;
+	int wartoscBonusu;
+
+public:
+	string dostanNazwe();
+	int dostanWartoscBonusu();
 };
 

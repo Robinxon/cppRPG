@@ -2,13 +2,18 @@
 #include <string>
 #include <locale.h>
 #include "Gracz.h"
+#include "Przeciwnik.h"
 using namespace std;
 
 void menuGlowne();
 void nowaGra();
 void prolog();
+void menuGry();
+void wypiszStatystykiGracza();
+void wypiszStatystykiPrzedmiotu(Przedmiot *_przedmiot);
 
 Gracz* gracz = NULL;
+Przeciwnik* przeciwnik = NULL;
 
 int main()
 {
@@ -76,6 +81,7 @@ void nowaGra()
     gracz = new Gracz(nazwaGracza, poziomTrudnosci);
 
     prolog();
+    menuGry();
 }
 
 void prolog()
@@ -85,4 +91,41 @@ void prolog()
     cout << "Ciekawe co będzie na niego tam czychać..." << endl;
     cout << endl;
     system("pause");
+}
+
+void menuGry()
+{
+    int wybor = 0;
+    do
+    {
+        system("CLS");
+        wypiszStatystykiGracza();
+    } while (wybor != 9);
+}
+
+void wypiszStatystykiGracza()
+{
+    cout << gracz->dostanNazwa() << ": " << gracz->dostanAktualneZdrowie() << "/" << gracz->dostanMaksZdrowie() << endl;
+    cout << "Poziom: " << gracz->dostanPoziom() << endl;
+    cout << "Doświadczenie: " << gracz->dostanDoswiadczenie() << endl;
+    cout << "Atak: " << gracz->dostanAtak() << endl;
+    cout << "Obrona: " << gracz->dostanObrone() << endl;
+    cout << endl;
+    cout << "Przedmiot ofensywny:" << endl;
+    wypiszStatystykiPrzedmiotu(gracz->dostanPrzedmiotOfensywny());
+    cout << "Przedmiot defensywny:" << endl;
+    wypiszStatystykiPrzedmiotu(gracz->dostanPrzedmiotDefensywny());
+    system("pause");
+}
+
+void wypiszStatystykiPrzedmiotu(Przedmiot *_przedmiot)
+{
+    if (_przedmiot != NULL)
+    {
+        cout << _przedmiot->dostanNazwe() << ": +" << _przedmiot->dostanWartoscBonusu() << endl;
+    }
+    else
+    {
+        cout << "-brak przedmiotu-" << endl;
+    }
 }
