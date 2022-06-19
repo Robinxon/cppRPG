@@ -100,6 +100,26 @@ void menuGry()
     {
         system("CLS");
         wypiszStatystykiGracza();
+        cout << endl;
+        cout << "Co chcesz teraz zrobić?" << endl;
+        cout << "1. Idź dalej" << endl;
+        cout << "2. Zapisz grę" << endl;
+        cout << "9. Wyjdź do menu" << endl;
+        cin >> wybor;
+
+        switch (wybor)
+        {
+        case 1:
+            //losowe wydarzenie
+            break;
+        case 2:
+            //zapisanie gry
+            break;
+        case 9:
+            break;
+        default:
+            break;
+        }
     } while (wybor != 9);
 }
 
@@ -115,7 +135,6 @@ void wypiszStatystykiGracza()
     wypiszStatystykiPrzedmiotu(gracz->dostanPrzedmiotOfensywny());
     cout << "Przedmiot defensywny:" << endl;
     wypiszStatystykiPrzedmiotu(gracz->dostanPrzedmiotDefensywny());
-    system("pause");
 }
 
 void wypiszStatystykiPrzedmiotu(Przedmiot *_przedmiot)
