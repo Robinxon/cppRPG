@@ -21,5 +21,7 @@ public:
 	int dostanAtak();
 
 	int dostanObrone();
+
+	bool zapisz();
 };
 

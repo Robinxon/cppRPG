@@ -95,12 +95,18 @@ void prolog()
 
 void menuGry()
 {
+    string wiadomosc = "";
     int wybor = 0;
     do
     {
         system("CLS");
         wypiszStatystykiGracza();
         cout << endl;
+        if (wiadomosc != "")
+        {
+            cout << wiadomosc << endl;
+            wiadomosc = "";
+        }
         cout << "Co chcesz teraz zrobić?" << endl;
         cout << "1. Idź dalej" << endl;
         cout << "2. Zapisz grę" << endl;
@@ -113,7 +119,14 @@ void menuGry()
             //losowe wydarzenie
             break;
         case 2:
-            //zapisanie gry
+            if (gracz->zapisz())
+            {
+                wiadomosc = "Gra zapisana pomyślnie!";
+            }
+            else
+            {
+                wiadomosc = "Nie udało się zapisać gry!";
+            }
             break;
         case 9:
             break;
