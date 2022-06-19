@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include <locale.h>
+#include <fstream>
 #include "Gracz.h"
 #include "Przeciwnik.h"
 using namespace std;
@@ -11,6 +12,8 @@ void prolog();
 void menuGry();
 void wypiszStatystykiGracza();
 void wypiszStatystykiPrzedmiotu(Przedmiot *_przedmiot);
+void wczytajGre(string *_wiadomosc);
+bool czyZapisIstnieje();
 
 Gracz* gracz = NULL;
 Przeciwnik* przeciwnik = NULL;
@@ -27,6 +30,7 @@ int main()
 
 void menuGlowne()
 {
+    string wiadomosc = "";
     int wybor = 0;
     do
     {
@@ -39,6 +43,12 @@ void menuGlowne()
         cout << R"( \___  >   __/|   __/|____|_  /|____|    \______  /)" << endl;
         cout << R"(     \/|__|   |__|          \/                  \/ )" << endl;
         cout << endl;
+        if (wiadomosc != "")
+        {
+            cout << wiadomosc << endl;
+            cout << endl;
+            wiadomosc = "";
+        }
         cout << "1. Nowa gra" << endl;
         cout << "2. Wczytaj grę" << endl;
         cout << "9. Wyjdź z gry" << endl;
@@ -50,7 +60,7 @@ void menuGlowne()
             nowaGra();
             break;
         case 2:
-            //wczytaj gre
+            wczytajGre(&wiadomosc);
             break;
         default:
             break;
@@ -105,6 +115,7 @@ void menuGry()
         if (wiadomosc != "")
         {
             cout << wiadomosc << endl;
+            cout << endl;
             wiadomosc = "";
         }
         cout << "Co chcesz teraz zrobić?" << endl;
@@ -160,4 +171,24 @@ void wypiszStatystykiPrzedmiotu(Przedmiot *_przedmiot)
     {
         cout << "-brak przedmiotu-" << endl;
     }
+}
+
+void wczytajGre(string *_wiadomosc)
+{
+    if(czyZapisIstnieje())
+    {
+        gracz = new Gracz();
+        menuGry();
+    }
+    else
+    {
+        *_wiadomosc = "Nie udało się wczytać gry!";
+    }
+    
+}
+
+bool czyZapisIstnieje()
+{
+    ifstream plik("save.txt");
+    return plik.good();
 }

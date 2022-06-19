@@ -9,6 +9,7 @@ private:
 	int wartoscBonusu;
 
 public:
+	Przedmiot(string _nazwa, int _wartoscBonusu);
 	string dostanNazwe();
 	int dostanWartoscBonusu();
 };

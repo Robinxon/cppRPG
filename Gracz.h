@@ -11,6 +11,7 @@ private:
 
 public:
 	Gracz(string _nazwa, int _poziomTrudnosci);
+	Gracz();
 
 	int dostanDoswiadczenie();
 
