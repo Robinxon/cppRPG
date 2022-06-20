@@ -11,10 +11,8 @@ Gracz::Gracz(string _nazwa, int _poziomTrudnosci)
 	maksZdrowie = aktualneZdrowie = 100;
 	poziom = 1;
 	doswiadczenie = 0;
-	//przedmiotOfensywny = NULL;
-	//przedmiotDefensywny = NULL;
-	przedmiotOfensywny = new Przedmiot("Olisadebe", 15);
-	przedmiotDefensywny = new Przedmiot("Baba noga", 33);
+	przedmiotOfensywny = NULL;
+	przedmiotDefensywny = NULL;
 }
 
 Gracz::Gracz()
