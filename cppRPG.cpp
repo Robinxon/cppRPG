@@ -18,8 +18,8 @@ void wczytajGre(string *_wiadomosc);
 bool czyZapisIstnieje();
 void losujWydarzenie(string *_wiadomosc);
 void wydarzenieNic();
-void wydarzeniePrzedmiot(string* _wiadomosc);
-void wydarzeniePrzeciwnik(string* _wiadomosc);
+void wydarzeniePrzedmiot(string *_wiadomosc);
+void wydarzeniePrzeciwnik(string *_wiadomosc);
 
 Gracz* gracz = NULL;
 Przeciwnik* przeciwnik = NULL;
@@ -31,7 +31,6 @@ int main()
 
     menuGlowne();
 
-    delete gracz;
     return 0;
 }
 
@@ -161,6 +160,8 @@ void menuGry()
             break;
         }
     } while (wybor != 9);
+
+    delete gracz;
 }
 
 void wypiszStatystykiGracza()
@@ -355,7 +356,7 @@ void wydarzeniePrzedmiot(string *_wiadomosc)
     } while (wybor != 1 && wybor != 2);
 }
 
-void wydarzeniePrzeciwnik(string* _wiadomosc)
+void wydarzeniePrzeciwnik(string *_wiadomosc)
 {
     string nazwa;
     int atak = 0, obrona = 0, zdrowie = 0, poziom = 0;
@@ -430,6 +431,7 @@ void wydarzeniePrzeciwnik(string* _wiadomosc)
     cout << "Na twojej drodze staje " << przeciwnik->dostanNazwa() << ", który chce z tobą walczyć!" << endl;
 
     int wybor = 0, tura = 1;
+    bool ucieczka = false;
     do
     {
         cout << endl;
@@ -450,10 +452,14 @@ void wydarzeniePrzeciwnik(string* _wiadomosc)
             //atak
             break;
         case 2:
-            //ucieczka
+            ucieczka = true;
+            cout << "Udało ci się uciec od przeciwnika!" << endl;
+            *_wiadomosc = "Uciekasz od przeciwnika i nie dostajesz żadnych bonusów.";
             break;
         default:
             break;
         } 
-    } while (przeciwnik->dostanAktualneZdrowie() > 0);
+    } while (przeciwnik->dostanAktualneZdrowie() > 0 && !ucieczka);
+
+    delete przeciwnik;
 }
