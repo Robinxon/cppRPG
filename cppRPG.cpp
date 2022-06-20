@@ -461,7 +461,7 @@ void wydarzeniePrzeciwnik(string *_wiadomosc)
         default:
             break;
         } 
-    } while (przeciwnik->dostanAktualneZdrowie() > 0 && gracz->dostanAktualneZdrowie() && !ucieczka);
+    } while (przeciwnik->dostanAktualneZdrowie() > 0 && gracz->dostanAktualneZdrowie() > 0 && !ucieczka);
 
     delete przeciwnik;
 }
