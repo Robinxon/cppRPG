@@ -14,6 +14,7 @@ void wypiszStatystykiGracza();
 void wypiszStatystykiPrzedmiotu(Przedmiot *_przedmiot);
 void wczytajGre(string *_wiadomosc);
 bool czyZapisIstnieje();
+void losujWydarzenie();
 
 Gracz* gracz = NULL;
 Przeciwnik* przeciwnik = NULL;
@@ -21,6 +22,7 @@ Przeciwnik* przeciwnik = NULL;
 int main()
 {
     setlocale(LC_CTYPE, "Polish");
+    srand(time(NULL));
 
     menuGlowne();
 
@@ -127,7 +129,7 @@ void menuGry()
         switch (wybor)
         {
         case 1:
-            //losowe wydarzenie
+            losujWydarzenie();
             break;
         case 2:
             if (gracz->zapisz())
@@ -191,4 +193,25 @@ bool czyZapisIstnieje()
 {
     ifstream plik("save.txt");
     return plik.good();
+}
+
+void losujWydarzenie()
+{
+    int r = rand() % 100;
+    if (r < 20)
+    {
+        //wydarzenie nic
+    }
+    else if (r < 40)
+    {
+        //wydarzenie przedmiot
+    }
+    else if (r < 90)
+    {
+        //wydarzenie przeciwnik
+    }
+    else
+    {
+        //wydarzenie boss
+    }
 }
