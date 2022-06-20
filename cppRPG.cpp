@@ -255,25 +255,81 @@ void wydarzenieNic()
 
 void wydarzeniePrzedmiot()
 {
+    string nazwa;
+    int bonus;
+    bool czyOfensywny;
+
     int r = rand() % 100;
     if (r < 20)
     {
-        //sztylet
+        nazwa = "Sztylet";
+        bonus = (rand() % 10) + 1;
+        czyOfensywny = true;
     }
     else if (r < 40)
     {
-        //miecz
+        nazwa = "Miecz";
+        bonus = (rand() % 10) + 6;
+        czyOfensywny = true;
     }
-    else if (r < 60)
+    else if (r < 50)
     {
-        //topór
+        nazwa = "Topór";
+        bonus = (rand() % 10) + 11;
+        czyOfensywny = true;
     }
-    else if (r < 80)
+    else if (r < 70)
     {
-        //tarcza
+        nazwa = "Tarcza";
+        bonus = (rand() % 10) + 1;
+        czyOfensywny = false;
+    }
+    else if (r < 90)
+    {
+        nazwa = "Amulet";
+        bonus = (rand() % 10) + 6;
+        czyOfensywny = false;
     }
     else
     {
-        //amulet
+        nazwa = "Zbroja";
+        bonus = (rand() % 10) + 11;
+        czyOfensywny = false;
     }
+
+    int wybor = 0;
+    do
+    {
+        cout << "Znajdujesz przedmiot: " << nazwa << " +" << bonus << " do punktów ";
+        if (czyOfensywny)
+        {
+            cout << "ataku." << endl;
+        }
+        else
+        {
+            cout << "obrony." << endl;
+        }
+        cout << "Czy chcesz się w niego wyposażyć?" << endl;
+        cin >> wybor;
+
+        switch (wybor)
+        {
+        case 1:
+            if (czyOfensywny)
+            {
+                gracz->ustawPrzedmiotOfensywny(nazwa, bonus);
+            }
+            else
+            {
+                gracz->ustawPrzedmiotDefensywny(nazwa, bonus);
+            }
+            menuGry();
+            break;
+        case 2:
+            menuGry();
+            break;
+        default:
+            break;
+        }
+    } while (wybor != 1 && wybor != 2);
 }

@@ -16,8 +16,10 @@ public:
 	int dostanDoswiadczenie();
 
 	Przedmiot* dostanPrzedmiotOfensywny();
+	void ustawPrzedmiotOfensywny(string _nazwa, int _wartoscBonusu);
 
 	Przedmiot* dostanPrzedmiotDefensywny();
+	void ustawPrzedmiotDefensywny(string _nazwa, int _wartoscBonusu);
 
 	int dostanAtak();
 

@@ -78,9 +78,19 @@ Przedmiot* Gracz::dostanPrzedmiotOfensywny()
 	return przedmiotOfensywny;
 }
 
+void Gracz::ustawPrzedmiotOfensywny(string _nazwa, int _wartoscBonusu)
+{
+	przedmiotOfensywny = new Przedmiot(_nazwa, _wartoscBonusu);
+}
+
 Przedmiot* Gracz::dostanPrzedmiotDefensywny()
 {
 	return przedmiotDefensywny;
+}
+
+void Gracz::ustawPrzedmiotDefensywny(string _nazwa, int _wartoscBonusu)
+{
+	przedmiotDefensywny = new Przedmiot(_nazwa, _wartoscBonusu);
 }
 
 int Gracz::dostanAtak()
