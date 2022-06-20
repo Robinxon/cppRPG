@@ -6,6 +6,7 @@
 #include "Przeciwnik.h"
 using namespace std;
 
+void pauzaSystemowa();
 void menuGlowne();
 void nowaGra();
 void prolog();
@@ -15,6 +16,7 @@ void wypiszStatystykiPrzedmiotu(Przedmiot *_przedmiot);
 void wczytajGre(string *_wiadomosc);
 bool czyZapisIstnieje();
 void losujWydarzenie();
+void wydarzenieNic();
 
 Gracz* gracz = NULL;
 Przeciwnik* przeciwnik = NULL;
@@ -28,6 +30,12 @@ int main()
 
     delete gracz;
     return 0;
+}
+
+void pauzaSystemowa()
+{
+    cout << "Wciśnij dowolny klawisz, aby kontynuować..." << endl;
+    cin.ignore();
 }
 
 void menuGlowne()
@@ -102,7 +110,7 @@ void prolog()
     cout << "Za górami, za lasami, nasz bohater postanowił wejść do starego zamczyska zwanego SESJA." << endl;
     cout << "Ciekawe co będzie na niego tam czychać..." << endl;
     cout << endl;
-    system("pause");
+    pauzaSystemowa();
 }
 
 void menuGry()
@@ -129,7 +137,10 @@ void menuGry()
         switch (wybor)
         {
         case 1:
+            system("CLS");
+            cout << "Wędrujesz w nieznane..." << endl;
             losujWydarzenie();
+            pauzaSystemowa();
             break;
         case 2:
             if (gracz->zapisz())
@@ -200,7 +211,7 @@ void losujWydarzenie()
     int r = rand() % 100;
     if (r < 20)
     {
-        //wydarzenie nic
+        wydarzenieNic();
     }
     else if (r < 40)
     {
@@ -213,5 +224,30 @@ void losujWydarzenie()
     else
     {
         //wydarzenie boss
+    }
+}
+
+void wydarzenieNic()
+{
+    int r = rand() % 100;
+    if (r < 20)
+    {
+        cout << "Nic nie znajdujesz." << endl;
+    }
+    else if (r < 40)
+    {
+        cout << "Dochodzisz do opuszczonego domu, w którym nie znajdujesz nic przydatnego." << endl;
+    }
+    else if (r < 60)
+    {
+        cout << "W oddali widzisz postać, która ucieka w mrok jak tylko cię zobaczyła." << endl;
+    }
+    else if (r < 80)
+    {
+        cout << "Na ziemi widzisz coś błyszczącego, lewcz niestety to tylko bezwartościowy kawałek szkła." << endl;
+    }
+    else
+    {
+        cout << "Burczy ci w brzuchu, lecz niestety w zasięgu wzroku nie ma nic do jedzenia." << endl;
     }
 }
