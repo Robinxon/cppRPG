@@ -14,6 +14,7 @@ public:
 	Gracz();
 
 	int dostanDoswiadczenie();
+	void dodajDoswiadczenie(int _doswiadczenie);
 
 	Przedmiot* dostanPrzedmiotOfensywny();
 	void ustawPrzedmiotOfensywny(string _nazwa, int _wartoscBonusu);
@@ -26,5 +27,6 @@ public:
 	int dostanObrone();
 
 	bool zapisz();
+	int dostanPoziomWGore();
 };
 

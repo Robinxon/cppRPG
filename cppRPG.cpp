@@ -22,6 +22,7 @@ void wydarzeniePrzedmiot(string *_wiadomosc);
 void wydarzeniePrzeciwnik(string *_wiadomosc);
 void walka();
 void graPrzegrana();
+void przydzielDoswiadczenie();
 
 Gracz* gracz = NULL;
 Przeciwnik* przeciwnik = NULL;
@@ -282,13 +283,13 @@ void wydarzeniePrzedmiot(string *_wiadomosc)
     else if (r < 40)
     {
         nazwa = "Miecz";
-        bonus = (rand() % 10) + 6;
+        bonus = (rand() % 10) + 3;
         czyOfensywny = true;
     }
     else if (r < 50)
     {
         nazwa = "Topór";
-        bonus = (rand() % 10) + 11;
+        bonus = (rand() % 10) + 6;
         czyOfensywny = true;
     }
     else if (r < 70)
@@ -300,13 +301,13 @@ void wydarzeniePrzedmiot(string *_wiadomosc)
     else if (r < 90)
     {
         nazwa = "Amulet";
-        bonus = (rand() % 10) + 6;
+        bonus = (rand() % 10) + 4;
         czyOfensywny = false;
     }
     else
     {
         nazwa = "Zbroja";
-        bonus = (rand() % 10) + 11;
+        bonus = (rand() % 10) + 7;
         czyOfensywny = false;
     }
 
@@ -380,8 +381,8 @@ void wydarzeniePrzeciwnik(string *_wiadomosc)
             obrona = (rand() % 2) + 3;
             break;
         case 3:
-            atak = (rand() % 2) + 5;
-            obrona = (rand() % 2) + 5;
+            atak = (rand() % 2) + 7;
+            obrona = (rand() % 2) + 9;
             break;
         }
     }
@@ -401,8 +402,8 @@ void wydarzeniePrzeciwnik(string *_wiadomosc)
             obrona = (rand() % 3) + 4;
             break;
         case 3:
-            atak = (rand() % 3) + 6;
-            obrona = (rand() % 3) + 7;
+            atak = (rand() % 3) + 9;
+            obrona = (rand() % 3) + 11;
             break;
         }
     }
@@ -462,6 +463,13 @@ void wydarzeniePrzeciwnik(string *_wiadomosc)
             break;
         } 
     } while (przeciwnik->dostanAktualneZdrowie() > 0 && gracz->dostanAktualneZdrowie() > 0 && !ucieczka);
+
+    if (przeciwnik->dostanAktualneZdrowie() <= 0)
+    {
+        cout << "Przeciwnik pokonany!" << endl;
+        przydzielDoswiadczenie();
+        pauzaSystemowa();
+    }
 
     delete przeciwnik;
 }
@@ -530,4 +538,32 @@ void graPrzegrana()
 {
     cout << "Niestety poległeś w walce..." << endl;
     pauzaSystemowa();
+}
+
+void przydzielDoswiadczenie()
+{
+    int zdobyteDoswiadczenie = 0;
+
+    int r = rand() % 100;
+    if (r < 20)
+    {
+        zdobyteDoswiadczenie = przeciwnik->dostanPoziom() * 3;
+    }
+    else if (r < 50)
+    {
+        zdobyteDoswiadczenie = przeciwnik->dostanPoziom() * 2;
+    }
+    else
+    {
+        zdobyteDoswiadczenie = przeciwnik->dostanPoziom() * 1;
+    }
+
+    gracz->dodajDoswiadczenie(zdobyteDoswiadczenie);
+    cout << "Otrzymujesz " << zdobyteDoswiadczenie << " punktów doświadczenia." << endl;
+
+    int poziomWGore = gracz->dostanPoziomWGore();
+    if (poziomWGore > 0)
+    {
+        cout << "Awansujesz na wyższy poziom! Twoje statystyki zostają zwiększone." << endl;
+    }
 }

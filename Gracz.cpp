@@ -73,6 +73,11 @@ int Gracz::dostanDoswiadczenie()
 	return doswiadczenie;
 }
 
+void Gracz::dodajDoswiadczenie(int _doswiadczenie)
+{
+	doswiadczenie += _doswiadczenie;
+}
+
 Przedmiot* Gracz::dostanPrzedmiotOfensywny()
 {
 	return przedmiotOfensywny;
@@ -170,4 +175,25 @@ bool Gracz::zapisz()
 	{
 		return false;
 	}
+}
+
+int Gracz::dostanPoziomWGore()
+{
+	int poziomWGore = 0;
+
+	for (doswiadczenie; doswiadczenie >= 10; doswiadczenie -= 10)
+	{
+		poziomWGore++;
+	}
+
+	if (poziomWGore > 0)
+	{
+		poziom += poziomWGore;
+		maksZdrowie += poziomWGore * 10;
+		aktualneZdrowie += poziomWGore * 10;
+		atak += poziomWGore;
+		obrona += poziomWGore;
+	}
+
+	return poziomWGore;
 }
