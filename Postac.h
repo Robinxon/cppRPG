@@ -27,5 +27,7 @@ public:
 	int dostanAtak();
 
 	int dostanObrone();
+
+	void otrzymajObrazenia(int _obrazenia);
 };
 

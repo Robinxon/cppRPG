@@ -20,6 +20,8 @@ void losujWydarzenie(string *_wiadomosc);
 void wydarzenieNic();
 void wydarzeniePrzedmiot(string *_wiadomosc);
 void wydarzeniePrzeciwnik(string *_wiadomosc);
+void walka();
+void graPrzegrana();
 
 Gracz* gracz = NULL;
 Przeciwnik* przeciwnik = NULL;
@@ -142,7 +144,6 @@ void menuGry()
             system("CLS");
             cout << "Wędrujesz w nieznane..." << endl;
             losujWydarzenie(&wiadomosc);
-            pauzaSystemowa();
             break;
         case 2:
             if (gracz->zapisz())
@@ -159,7 +160,7 @@ void menuGry()
         default:
             break;
         }
-    } while (wybor != 9);
+    } while (wybor != 9 && gracz->dostanAktualneZdrowie() > 0);
 
     delete gracz;
 }
@@ -262,6 +263,7 @@ void wydarzenieNic()
     {
         cout << "Burczy ci w brzuchu, lecz niestety w zasięgu wzroku nie ma nic do jedzenia." << endl;
     }
+    pauzaSystemowa();
 }
 
 void wydarzeniePrzedmiot(string *_wiadomosc)
@@ -399,8 +401,8 @@ void wydarzeniePrzeciwnik(string *_wiadomosc)
             obrona = (rand() % 3) + 4;
             break;
         case 3:
-            atak = (rand() % 3) + 5;
-            obrona = (rand() % 3) + 4;
+            atak = (rand() % 3) + 6;
+            obrona = (rand() % 3) + 7;
             break;
         }
     }
@@ -416,12 +418,12 @@ void wydarzeniePrzeciwnik(string *_wiadomosc)
             obrona = (rand() % 3) + 3;
             break;
         case 2:
-            atak = (rand() % 3) + 3;
-            obrona = (rand() % 3) + 3;
+            atak = (rand() % 3) + 4;
+            obrona = (rand() % 3) + 5;
             break;
         case 3:
-            atak = (rand() % 4) + 3;
-            obrona = (rand() % 4) + 3;
+            atak = (rand() % 4) + 7;
+            obrona = (rand() % 4) + 8;
             break;
         }
     }
@@ -449,7 +451,7 @@ void wydarzeniePrzeciwnik(string *_wiadomosc)
         switch (wybor)
         {
         case 1:
-            //atak
+            walka();
             break;
         case 2:
             ucieczka = true;
@@ -459,7 +461,73 @@ void wydarzeniePrzeciwnik(string *_wiadomosc)
         default:
             break;
         } 
-    } while (przeciwnik->dostanAktualneZdrowie() > 0 && !ucieczka);
+    } while (przeciwnik->dostanAktualneZdrowie() > 0 && gracz->dostanAktualneZdrowie() && !ucieczka);
 
     delete przeciwnik;
+}
+
+void walka()
+{
+    int atakGracz = 0, atakPrzeciwnik = 0;
+
+    int r = rand() % 100; //wylosuj odchył procentowy ataku
+    if (r < 10)
+    {
+        atakGracz = gracz->dostanAtak() * 1.3 + gracz->dostanPrzedmiotOfensywny()->dostanWartoscBonusu();
+    }
+    else if (r < 30)
+    {
+        atakGracz = gracz->dostanAtak() * 1.2 + gracz->dostanPrzedmiotOfensywny()->dostanWartoscBonusu();
+    }
+    else if (r < 60)
+    {
+        atakGracz = gracz->dostanAtak() * 1.1 + gracz->dostanPrzedmiotOfensywny()->dostanWartoscBonusu();
+    }
+    else
+    {
+        atakGracz = gracz->dostanAtak() * 1.0 + gracz->dostanPrzedmiotOfensywny()->dostanWartoscBonusu();
+    }
+
+    int s = rand() % 100; //wylosuj obrażenia krytyczne
+    if (s < 10)
+    {
+        cout << "Atak krytyczny!" << endl;
+        atakGracz = atakGracz * 2 - przeciwnik->dostanObrone();
+    }
+    else
+    {
+        atakGracz = atakGracz * 1 - przeciwnik->dostanObrone();
+    }
+
+    if (atakGracz < 0) //wyzeruj atak jeśli obrona przeciwnika jest za duża
+    {
+        atakGracz = 0;
+    }
+
+    przeciwnik->otrzymajObrazenia(atakGracz); //przeciwnik otrzymuje obrażenia
+    cout << "Zadajesz " << atakGracz << " punktów obrazeń." << endl;
+
+    if (przeciwnik->dostanAktualneZdrowie() > 0) //jesli przeciwnik żyje to atakuje gracza
+    {
+        atakPrzeciwnik = przeciwnik->dostanAtak() - (gracz->dostanObrone() + gracz->dostanPrzedmiotDefensywny()->dostanWartoscBonusu());
+
+        if (atakPrzeciwnik < 0) //wyzeruj atak jeśli obrona gracza jest za duża
+        {
+            atakPrzeciwnik = 0;
+        }
+
+        gracz->otrzymajObrazenia(atakPrzeciwnik); //gracz otrzymuje obrażenia
+        cout << "Otrzymujesz " << atakPrzeciwnik << " punktów obrażeń." << endl;
+
+        if (gracz->dostanAktualneZdrowie() <= 0)
+        {
+            graPrzegrana();
+        }
+    }
+}
+
+void graPrzegrana()
+{
+    cout << "Niestety poległeś w walce..." << endl;
+    pauzaSystemowa();
 }

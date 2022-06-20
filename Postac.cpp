@@ -34,3 +34,8 @@ int Postac::dostanObrone()
 {
 	return obrona;
 }
+
+void Postac::otrzymajObrazenia(int _obrazenia)
+{
+	aktualneZdrowie -= _obrazenia;
+}

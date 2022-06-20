@@ -13,5 +13,12 @@ string Przedmiot::dostanNazwe()
 
 int Przedmiot::dostanWartoscBonusu()
 {
-	return wartoscBonusu;
+	if (this != nullptr)
+	{
+		return wartoscBonusu;
+	}
+	else
+	{
+		return 0;
+	}
 }
