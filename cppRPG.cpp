@@ -15,9 +15,9 @@ void wypiszStatystykiGracza();
 void wypiszStatystykiPrzedmiotu(Przedmiot *_przedmiot);
 void wczytajGre(string *_wiadomosc);
 bool czyZapisIstnieje();
-void losujWydarzenie();
+void losujWydarzenie(string *_wiadomosc);
 void wydarzenieNic();
-void wydarzeniePrzedmiot();
+void wydarzeniePrzedmiot(string* _wiadomosc);
 
 Gracz* gracz = NULL;
 Przeciwnik* przeciwnik = NULL;
@@ -36,7 +36,7 @@ int main()
 void pauzaSystemowa()
 {
     cout << "Wciśnij dowolny klawisz, aby kontynuować..." << endl;
-    cin.ignore();
+    system("pause>nul");
 }
 
 void menuGlowne()
@@ -140,7 +140,7 @@ void menuGry()
         case 1:
             system("CLS");
             cout << "Wędrujesz w nieznane..." << endl;
-            losujWydarzenie();
+            losujWydarzenie(&wiadomosc);
             pauzaSystemowa();
             break;
         case 2:
@@ -207,7 +207,7 @@ bool czyZapisIstnieje()
     return plik.good();
 }
 
-void losujWydarzenie()
+void losujWydarzenie(string *_wiadomosc)
 {
     int r = rand() % 100;
     if (r < 20)
@@ -216,7 +216,7 @@ void losujWydarzenie()
     }
     else if (r < 40)
     {
-        wydarzeniePrzedmiot();
+        wydarzeniePrzedmiot(_wiadomosc);
     }
     else if (r < 90)
     {
@@ -253,7 +253,7 @@ void wydarzenieNic()
     }
 }
 
-void wydarzeniePrzedmiot()
+void wydarzeniePrzedmiot(string *_wiadomosc)
 {
     string nazwa;
     int bonus;
@@ -309,7 +309,18 @@ void wydarzeniePrzedmiot()
         {
             cout << "obrony." << endl;
         }
+        cout << "Obecny przedmiot:" << endl;
+        if (czyOfensywny)
+        {
+            wypiszStatystykiPrzedmiotu(gracz->dostanPrzedmiotOfensywny());
+        }
+        else
+        {
+            wypiszStatystykiPrzedmiotu(gracz->dostanPrzedmiotDefensywny());
+        }
         cout << "Czy chcesz się w niego wyposażyć?" << endl;
+        cout << "1. Tak" << endl;
+        cout << "2. Nie" << endl;
         cin >> wybor;
 
         switch (wybor)
@@ -323,10 +334,10 @@ void wydarzeniePrzedmiot()
             {
                 gracz->ustawPrzedmiotDefensywny(nazwa, bonus);
             }
-            menuGry();
+            *_wiadomosc = "Wyposażyłeś się w nowy przedmiot!";
             break;
         case 2:
-            menuGry();
+            *_wiadomosc = "Zostawiłeś przedmiot tam gdzie leżał!";
             break;
         default:
             break;
