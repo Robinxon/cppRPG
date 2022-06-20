@@ -17,6 +17,7 @@ void wczytajGre(string *_wiadomosc);
 bool czyZapisIstnieje();
 void losujWydarzenie();
 void wydarzenieNic();
+void wydarzeniePrzedmiot();
 
 Gracz* gracz = NULL;
 Przeciwnik* przeciwnik = NULL;
@@ -215,7 +216,7 @@ void losujWydarzenie()
     }
     else if (r < 40)
     {
-        //wydarzenie przedmiot
+        wydarzeniePrzedmiot();
     }
     else if (r < 90)
     {
@@ -249,5 +250,30 @@ void wydarzenieNic()
     else
     {
         cout << "Burczy ci w brzuchu, lecz niestety w zasięgu wzroku nie ma nic do jedzenia." << endl;
+    }
+}
+
+void wydarzeniePrzedmiot()
+{
+    int r = rand() % 100;
+    if (r < 20)
+    {
+        //sztylet
+    }
+    else if (r < 40)
+    {
+        //miecz
+    }
+    else if (r < 60)
+    {
+        //topór
+    }
+    else if (r < 80)
+    {
+        //tarcza
+    }
+    else
+    {
+        //amulet
     }
 }
