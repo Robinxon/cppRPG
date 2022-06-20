@@ -3,8 +3,7 @@
 
 class Przeciwnik : public Postac
 {
-private:
-	string typ;
-	int nagroda;
+public:
+	Przeciwnik(string _nazwa, int _atak, int _obrona, int _zdrowie, int _poziom);
 };
 

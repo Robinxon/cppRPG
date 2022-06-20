@@ -12,12 +12,14 @@ void nowaGra();
 void prolog();
 void menuGry();
 void wypiszStatystykiGracza();
+void wypiszStatystykiPrzeciwnika();
 void wypiszStatystykiPrzedmiotu(Przedmiot *_przedmiot);
 void wczytajGre(string *_wiadomosc);
 bool czyZapisIstnieje();
 void losujWydarzenie(string *_wiadomosc);
 void wydarzenieNic();
 void wydarzeniePrzedmiot(string* _wiadomosc);
+void wydarzeniePrzeciwnik(string* _wiadomosc);
 
 Gracz* gracz = NULL;
 Przeciwnik* przeciwnik = NULL;
@@ -175,6 +177,14 @@ void wypiszStatystykiGracza()
     wypiszStatystykiPrzedmiotu(gracz->dostanPrzedmiotDefensywny());
 }
 
+void wypiszStatystykiPrzeciwnika()
+{
+    cout << przeciwnik->dostanNazwa() << ": " << przeciwnik->dostanAktualneZdrowie() << "/" << przeciwnik->dostanMaksZdrowie() << endl;
+    cout << "Poziom: " << przeciwnik->dostanPoziom() << endl;
+    cout << "Atak: " << przeciwnik->dostanAtak() << endl;
+    cout << "Obrona: " << przeciwnik->dostanObrone() << endl;
+}
+
 void wypiszStatystykiPrzedmiotu(Przedmiot *_przedmiot)
 {
     if (_przedmiot != NULL)
@@ -220,7 +230,7 @@ void losujWydarzenie(string *_wiadomosc)
     }
     else if (r < 90)
     {
-        //wydarzenie przeciwnik
+        wydarzeniePrzeciwnik(_wiadomosc);
     }
     else
     {
@@ -343,4 +353,107 @@ void wydarzeniePrzedmiot(string *_wiadomosc)
             break;
         }
     } while (wybor != 1 && wybor != 2);
+}
+
+void wydarzeniePrzeciwnik(string* _wiadomosc)
+{
+    string nazwa;
+    int atak = 0, obrona = 0, zdrowie = 0, poziom = 0;
+
+    int r = rand() % 100;
+    if (r < 33)
+    {
+        nazwa = "Szczur";
+        zdrowie = 10;
+        poziom = (rand() % 3) + gracz->dostanPoziom();
+        switch (gracz->dostanPoziomTrudnosci())
+        {
+        case 1:
+            atak = (rand() % 2) + 1;
+            obrona = (rand() % 2) + 1;
+            break;
+        case 2:
+            atak = (rand() % 2) + 3;
+            obrona = (rand() % 2) + 3;
+            break;
+        case 3:
+            atak = (rand() % 2) + 5;
+            obrona = (rand() % 2) + 5;
+            break;
+        }
+    }
+    else if (r < 66)
+    {
+        nazwa = "Wilk";
+        zdrowie = 15;
+        poziom = (rand() % 3) + gracz->dostanPoziom();
+        switch (gracz->dostanPoziomTrudnosci())
+        {
+        case 1:
+            atak = (rand() % 2) + 3;
+            obrona = (rand() % 2) + 4;
+            break;
+        case 2:
+            atak = (rand() % 3) + 5;
+            obrona = (rand() % 3) + 4;
+            break;
+        case 3:
+            atak = (rand() % 3) + 5;
+            obrona = (rand() % 3) + 4;
+            break;
+        }
+    }
+    else
+    {
+        nazwa = "Goblin";
+        zdrowie = 20;
+        poziom = (rand() % 3) + gracz->dostanPoziom();
+        switch (gracz->dostanPoziomTrudnosci())
+        {
+        case 1:
+            atak = (rand() % 3) + 2;
+            obrona = (rand() % 3) + 3;
+            break;
+        case 2:
+            atak = (rand() % 3) + 3;
+            obrona = (rand() % 3) + 3;
+            break;
+        case 3:
+            atak = (rand() % 4) + 3;
+            obrona = (rand() % 4) + 3;
+            break;
+        }
+    }
+
+    przeciwnik = new Przeciwnik(nazwa, atak, obrona, zdrowie, poziom);
+
+    cout << "Na twojej drodze staje " << przeciwnik->dostanNazwa() << ", który chce z tobą walczyć!" << endl;
+
+    int wybor = 0, tura = 1;
+    do
+    {
+        cout << endl;
+        cout << "---== TURA " << tura << " ==---" << endl;
+        tura++;
+        wypiszStatystykiGracza();
+        cout << endl;
+        wypiszStatystykiPrzeciwnika();
+        cout << endl;
+        cout << "Co chcesz zrobić?" << endl;
+        cout << "1. Atakuj" << endl;
+        cout << "2. Uciekaj" << endl;
+        cin >> wybor;
+
+        switch (wybor)
+        {
+        case 1:
+            //atak
+            break;
+        case 2:
+            //ucieczka
+            break;
+        default:
+            break;
+        } 
+    } while (przeciwnik->dostanAktualneZdrowie() > 0);
 }
