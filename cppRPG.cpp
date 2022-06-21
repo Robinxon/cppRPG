@@ -20,9 +20,11 @@ void losujWydarzenie(string *_wiadomosc);
 void wydarzenieNic();
 void wydarzeniePrzedmiot(string *_wiadomosc);
 void wydarzeniePrzeciwnik(string *_wiadomosc);
+void wydarzenieBoss(string* _wiadomosc);
 void walka();
 void graPrzegrana();
 void przydzielDoswiadczenie();
+void koniecGry();
 
 Gracz* gracz = NULL;
 Przeciwnik* przeciwnik = NULL;
@@ -237,7 +239,7 @@ void losujWydarzenie(string *_wiadomosc)
     }
     else
     {
-        //wydarzenie boss
+        wydarzenieBoss(_wiadomosc);
     }
 }
 
@@ -474,6 +476,75 @@ void wydarzeniePrzeciwnik(string *_wiadomosc)
     delete przeciwnik;
 }
 
+void wydarzenieBoss(string* _wiadomosc)
+{
+    bool ucieczka = false;
+    int tura = 0, wybor = 0, wybor2 = 0;
+
+    przeciwnik = new Przeciwnik("Ogr", 10, 10, 100, 10);
+
+    cout << "Na swojej drodze spotykasz ogromnego Ogra." << endl;
+    cout << "Wygląda na agresywnego i bardzo groźnego." << endl;
+
+    do
+    {
+        cout << endl;
+        cout << "Czy jesteś gotów na ostateczną walkę?" << endl;
+        cout << "1. Tak" << endl;
+        cout << "2. Nie" << endl;
+        cin >> wybor;
+
+        switch (wybor)
+        {
+        case 1:
+            do
+            {
+                cout << endl;
+                cout << "---== TURA " << tura << " ==---" << endl;
+                tura++;
+                wypiszStatystykiGracza();
+                cout << endl;
+                wypiszStatystykiPrzeciwnika();
+                cout << endl;
+                cout << "Co chcesz zrobić?" << endl;
+                cout << "1. Atakuj" << endl;
+                cout << "2. Uciekaj" << endl;
+                cin >> wybor2;
+
+                switch (wybor2)
+                {
+                case 1:
+                    walka();
+                    break;
+                case 2:
+                    ucieczka = true;
+                    cout << "Udało ci się uciec od przeciwnika!" << endl;
+                    *_wiadomosc = "Uciekasz od przeciwnika i nie dostajesz żadnych bonusów.";
+                    break;
+                default:
+                    break;
+                }
+            } while (przeciwnik->dostanAktualneZdrowie() > 0 && gracz->dostanAktualneZdrowie() > 0 && !ucieczka);
+
+            if (przeciwnik->dostanAktualneZdrowie() <= 0)
+            {
+                cout << "Przeciwnik pokonany!" << endl;
+                koniecGry();
+            }
+            break;
+        case 2:
+            cout << "Oddalasz się po cichu!" << endl;
+            *_wiadomosc = "Może następnym razem.";
+            pauzaSystemowa();
+            break;
+        default:
+            break;
+        }
+    } while (wybor != 2 && przeciwnik->dostanAktualneZdrowie() > 0 && gracz->dostanAktualneZdrowie() > 0 && !ucieczka);
+
+    delete przeciwnik;
+}
+
 void walka()
 {
     int atakGracz = 0, atakPrzeciwnik = 0;
@@ -566,4 +637,12 @@ void przydzielDoswiadczenie()
     {
         cout << "Awansujesz na wyższy poziom! Twoje statystyki zostają zwiększone." << endl;
     }
+}
+
+void koniecGry()
+{
+    system("CLS");
+    cout << "Pokonałeś głównego wroga! Gra zakończona." << endl;
+    cout << "Jeśli chcesz, możesz kontynuowac swoją przygodę." << endl;
+    pauzaSystemowa();
 }
